@@ -1,0 +1,50 @@
+<template>
+    <lightning-card title="Control Panel">
+        <lightning-button 
+            variant="destructive" 
+            label="Delete all histories" 
+            title="Delete all TestAccountNameHistory objects related to this TestAccountName object" 
+            icon-name="utility:delete" 
+            class="slds-m-left_x-small"
+            onclick={openModal}>
+        </lightning-button>
+    </lightning-card>
+
+    <template if:true={isQuestionModalOpened}>
+        <div class="demo-only" style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Control Panel</h2>
+                    </header>
+                
+                    <template if:false={isResultsModalOpened}>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <center><h2><b>Are you sure you want to delete all histories?</b></h2></center>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button label="Delete" variant="destructive" onclick={handleDeleteClick}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>
+                        </footer>
+                    </template>
+
+                    <template if:true={isResultsModalOpened}>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <template if:true={isLoading}>
+                                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                            </template>
+                            <template if:false={isLoading}>
+                                <center><h2><b>{message}</b></h2></center>
+                            </template>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button label="Close" variant="neutral"  onclick={closeModal}></lightning-button>
+                        </footer>
+                    </template>
+
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+</template>
